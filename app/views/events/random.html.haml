@@ -1,3 +1,4 @@
-%h1 Events#random
-%p Find me in app/views/events/random.html.erb
-= @event
+- if @event
+  = @event['name']
+- else
+  No nearby events found :(

@@ -1,5 +1,4 @@
 class MeetupGetter
-
   def self.get_nearby_event
     nearby_events.sample
   end
@@ -7,13 +6,14 @@ class MeetupGetter
   private
 
   def self.nearby_events
-    params = { 
+    params = {
       city: 'columbus',
       state: 'oh',
       country: 'us',
       status: 'upcoming',
       format: 'json',
-      page: '50'}
+      page: '50'
+    }
     meetup_api = MeetupApi.new
     meetup_api.open_events(params)['results']
   end
