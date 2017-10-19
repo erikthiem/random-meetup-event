@@ -11,12 +11,13 @@ RSpec.feature 'Display meetup event', type: :feature do
 
   context 'when there is at least one nearby event' do
 
-    let(:body) { {'results': [{name: :event_name}]}.to_json }
+    let(:body) { {'results': [{name: event_name, event_url: event_url}]}.to_json }
     let(:event_name) { 'Fun-sounding Thing' }
+    let(:event_url) { 'http://meetup/funthing' }
 
     specify do
       visit '/'
-      expect(page).to have_text(:event_name)
+      expect(page).to have_link(event_name, event_url)
     end
   end
 
