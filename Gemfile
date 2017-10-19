@@ -33,7 +33,8 @@ gem 'jbuilder', '~> 2.5'
 gem 'meetup_client'
 gem 'dotenv'
 gem 'haml'
-gem "haml-rails", "~> 1.0"
+gem 'haml-rails', '~> 1.0'
+gem 'webmock'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

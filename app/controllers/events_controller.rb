@@ -1,19 +1,6 @@
 class EventsController < ApplicationController
   def random
-    @event = nearby_events.sample
+    @event = MeetupGetter.get_nearby_event
   end
 
-  private
-
-  def nearby_events
-    params = { 
-      city: 'columbus',
-      state: 'oh',
-      country: 'us',
-      status: 'upcoming',
-      format: 'json',
-      page: '50'}
-    meetup_api = MeetupApi.new
-    @events ||= meetup_api.open_events(params)['results']
-  end
 end
