@@ -1,6 +1,6 @@
 class EventsController < ApplicationController
   def random
-    nearby_events.sample
+    @event = nearby_events.sample
   end
 
   private
