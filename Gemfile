@@ -30,6 +30,11 @@ gem 'jbuilder', '~> 2.5'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
+gem 'meetup_client'
+gem 'dotenv'
+gem 'haml'
+gem 'haml-rails', '~> 1.0'
+gem 'webmock'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -39,6 +44,8 @@ group :development, :test do
   gem 'selenium-webdriver'
   gem 'sqlite3'
   gem 'rspec-rails', '~> 3.6'
+  gem 'rubocop', '~> 0.51.0', require: false
+  gem 'dotenv-rails'
 end
 
 group :development do
