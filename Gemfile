@@ -39,6 +39,7 @@ group :development, :test do
   gem 'selenium-webdriver'
   gem 'sqlite3'
   gem 'rspec-rails', '~> 3.6'
+  gem 'rubocop', '~> 0.51.0', require: false
 end
 
 group :development do
