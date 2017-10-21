@@ -35,6 +35,8 @@ gem 'dotenv'
 gem 'haml'
 gem 'haml-rails', '~> 1.0'
 gem 'webmock'
+gem 'jquery-rails'
+gem 'materialize-sass'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
