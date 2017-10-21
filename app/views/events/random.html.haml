@@ -1,4 +1,5 @@
 - if @event
-  = link_to @event['name'], @event['event_url']
+  = link_to @event['name'], @event['event_url'], id: 'event-link'
+  = link_to 'Anything else?', root_path
 - else
   No nearby events found :(
