@@ -10,13 +10,36 @@ RSpec.feature 'Display meetup event', type: :feature do
 
   context 'when there is more than one nearby event' do
 
-    let(:body) { {'results': [{name: event_name, event_url: event_url, group: {name: event_group}}, {name: event2_name, event_url: event2_url, group: {name: event2_group}}]}.to_json }
+    let(:body) do
+      {'results': [
+        {
+          name: event_name,
+          event_url: event_url,
+          time: start_time,
+          duration: duration,
+          group: {
+            name: event_group
+          }
+        },
+        {
+          name: event2_name,
+          event_url: event2_url,
+          time: start_time,
+          duration: duration,
+          group: {
+            name: event2_group
+          }
+        }
+      ]}.to_json
+    end
     let(:event_name) { 'Fun-sounding Thing' }
     let(:event_url) { 'http://meetup/funthing' }
     let(:event_group) { 'group a' }
     let(:event2_name) { 'something else' }
     let(:event2_url) { 'http://meetup/otherthing' }
     let(:event2_group) { 'group b' }
+    let(:start_time) { 1508605200000 }
+    let(:duration) { 18000000 }
 
     specify do
       visit '/'
@@ -30,15 +53,33 @@ RSpec.feature 'Display meetup event', type: :feature do
 
   context 'when there is at least one nearby event' do
 
-    let(:body) { {'results': [{name: event_name, event_url: event_url, group: {name: group_name}}]}.to_json }
+    let(:body) do
+      {'results': [
+        {
+          name: event_name,
+          event_url: event_url,
+          time: start_time,
+          duration: duration,
+          group: {
+            name: group_name
+          }
+        }
+      ]}.to_json
+    end
     let(:event_name) { 'Fun-sounding Thing' }
     let(:event_url) { 'http://meetup/funthing' }
     let(:group_name) { 'People hanging out' }
+    let(:start_time) { 1508605200000 }
+    let(:duration) { 18000000 }
+
+    let(:end_time) { start_time + duration }
 
     specify do
       visit '/'
       expect(page).to have_link(event_name, event_url)
       expect(page).to have_text(group_name)
+      expect(page).to have_text(start_time)
+      expect(page).to have_text(end_time)
     end
   end
 

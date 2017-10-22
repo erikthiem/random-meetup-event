@@ -2,6 +2,7 @@
   %h3
     = link_to @event['name'], @event['event_url'], id: 'event-link'
     %h4 Group: #{@event['group']['name']}
+    %p Starts: #{@event['time']}, Ends: #{@event['time'] + @event['duration']}
   = link_to 'Anything else?', root_path, class: 'btn'
 - else
   No nearby events found :(
