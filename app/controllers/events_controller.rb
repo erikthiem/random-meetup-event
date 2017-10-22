@@ -1,5 +1,5 @@
 class EventsController < ApplicationController
-  def random
+  def show
     @event = MeetupGetter.get_nearby_event
   end
 end
