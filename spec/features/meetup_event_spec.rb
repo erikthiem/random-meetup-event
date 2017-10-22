@@ -18,7 +18,7 @@ RSpec.feature 'Display meetup event', type: :feature do
           time: start_time,
           duration: duration,
           group: {
-            name: event_group
+            name: group
           }
         },
         {
@@ -27,17 +27,16 @@ RSpec.feature 'Display meetup event', type: :feature do
           time: start_time,
           duration: duration,
           group: {
-            name: event2_group
+            name: group
           }
         }
       ]}.to_json
     end
     let(:event_name) { 'Fun-sounding Thing' }
     let(:event_url) { 'http://meetup/funthing' }
-    let(:event_group) { 'group a' }
     let(:event2_name) { 'something else' }
     let(:event2_url) { 'http://meetup/otherthing' }
-    let(:event2_group) { 'group b' }
+    let(:group) { 'a random group' }
     let(:start_time) { 1508605200000 }
     let(:duration) { 18000000 }
 
