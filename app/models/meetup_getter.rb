@@ -1,5 +1,5 @@
 class MeetupGetter
-  def self.get_nearby_event
+  def self.event
     nearby_events.sample
   end
 

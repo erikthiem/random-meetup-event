@@ -89,5 +89,4 @@ RSpec.feature 'Display meetup event', type: :feature do
       expect(page).to have_text('No nearby events found :(')
     end
   end
-
 end

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe MeetupGetter, type: :model do
-  describe '.get_nearby_event' do
+  describe '.event' do
 
     let(:body) { {'results': []}.to_json }
     let(:status) { 200 }
@@ -14,7 +14,7 @@ RSpec.describe MeetupGetter, type: :model do
       let(:body) { {'results': [{event_url: test_urls[0]}, {event_url: test_urls[1]}]}.to_json }
       let(:test_urls) { ['http://test1', 'http://test2'] }
       it 'returns a random event' do
-        expect(described_class.get_nearby_event['event_url']).to be_in test_urls
+        expect(described_class.event['event_url']).to be_in test_urls
       end
 
     end
@@ -25,14 +25,14 @@ RSpec.describe MeetupGetter, type: :model do
       let(:test_url) { 'http://testurl ' }
 
       it 'returns the nearby event' do
-        expect(described_class.get_nearby_event['event_url']).to eq test_url
+        expect(described_class.event['event_url']).to eq test_url
       end
     end
 
     context 'when there are no nearby events' do
 
       it 'returns nil' do
-        expect(described_class.get_nearby_event).to be_nil
+        expect(described_class.event).to be_nil
       end
     end
 
@@ -41,7 +41,7 @@ RSpec.describe MeetupGetter, type: :model do
       let(:status) { 404 }
 
       it 'returns nil' do
-        expect(described_class.get_nearby_event).to be_nil
+        expect(described_class.event).to be_nil
       end
     end
   end
