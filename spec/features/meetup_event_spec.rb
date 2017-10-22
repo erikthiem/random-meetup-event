@@ -10,11 +10,13 @@ RSpec.feature 'Display meetup event', type: :feature do
 
   context 'when there is more than one nearby event' do
 
-    let(:body) { {'results': [{name: event_name, event_url: event_url}, {name: event2_name, event_url: event2_url}]}.to_json }
+    let(:body) { {'results': [{name: event_name, event_url: event_url, group: {name: event_group}}, {name: event2_name, event_url: event2_url, group: {name: event2_group}}]}.to_json }
     let(:event_name) { 'Fun-sounding Thing' }
     let(:event_url) { 'http://meetup/funthing' }
+    let(:event_group) { 'group a' }
     let(:event2_name) { 'something else' }
     let(:event2_url) { 'http://meetup/otherthing' }
+    let(:event2_group) { 'group b' }
 
     specify do
       visit '/'
@@ -28,13 +30,15 @@ RSpec.feature 'Display meetup event', type: :feature do
 
   context 'when there is at least one nearby event' do
 
-    let(:body) { {'results': [{name: event_name, event_url: event_url}]}.to_json }
+    let(:body) { {'results': [{name: event_name, event_url: event_url, group: {name: group_name}}]}.to_json }
     let(:event_name) { 'Fun-sounding Thing' }
     let(:event_url) { 'http://meetup/funthing' }
+    let(:group_name) { 'People hanging out' }
 
     specify do
       visit '/'
       expect(page).to have_link(event_name, event_url)
+      expect(page).to have_text(group_name)
     end
   end
 
