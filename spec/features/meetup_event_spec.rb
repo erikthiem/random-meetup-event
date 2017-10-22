@@ -37,9 +37,7 @@ RSpec.feature 'Display meetup event', type: :feature do
 
   context 'when there are no nearby events' do
 
-    let(:body) do
-      { 'results': [] }
-    end
+    let(:body) { { 'results': [] } }
 
     specify "the page displays 'No nearby events found :('"do
       visit '/'
