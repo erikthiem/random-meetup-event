@@ -30,8 +30,8 @@ RSpec.feature 'Display meetup event', type: :feature do
       visit '/'
       expect(page).to have_link(event_name, event_url)
       expect(page).to have_text(group)
-      expect(page).to have_text(start_time)
-      expect(page).to have_text(end_time)
+      expect(page).to have_text("2017-10-21 13:00:00 -0400")
+      expect(page).to have_text("2017-10-21 18:00:00 -0400")
     end
   end
 
