@@ -2,7 +2,7 @@
   %h3
     = link_to @event['name'], @event['event_url'], id: 'event-link'
     %h4 Group: #{@event['group']['name']}
-    %p Starts: #{Time.at(@event['time']/1000)}, Ends: #{Time.at(@event['time']/1000 + @event['duration']/1000)}
+    %p Starts: #{Time.at(@event['time']/1000).strftime("%D %I:%M %p")}, Ends: #{Time.at(@event['time']/1000 + @event['duration']/1000).strftime("%D %I:%M %p")}
   = link_to 'Anything else?', root_path, class: 'btn'
 - else
   No nearby events found :(
