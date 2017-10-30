@@ -1,8 +1,13 @@
 - if @event
   %h3
-    = link_to @event['name'], @event['event_url'], id: 'event-link'
+    = link_to @name, @url, id: 'event-link'
     %h4 Group: #{@group}
-    %p Starts: #{@start_time}, Ends: #{@end_time}
+    %p
+      %b Starts:
+      #{@start_time}
+    %p
+      %b Ends:
+      #{@end_time}
   = link_to 'Anything else?', root_path, class: 'btn'
 - else
   No nearby events found :(

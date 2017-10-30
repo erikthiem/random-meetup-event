@@ -2,6 +2,8 @@ class EventsController < ApplicationController
   def show
     @event = MeetupGetter.event
     return if not @event
+    @name = @event['name']
+    @url = @event['event_url']
     @group = @event['group']['name']
 
     if @event['time']
