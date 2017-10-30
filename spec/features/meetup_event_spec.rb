@@ -9,7 +9,6 @@ RSpec.feature 'Display meetup event', type: :feature do
   end
 
   context 'when there is more than one nearby event' do
-
     let(:body) { meetup_body_multiple_results }
 
     specify "clicking 'Anything Else?' gets a random event" do
@@ -23,20 +22,47 @@ RSpec.feature 'Display meetup event', type: :feature do
   end
 
   context 'when there is at least one nearby event' do
+    context 'when there is a start time and duration' do
+      let(:body) { meetup_body }
 
-    let(:body) { meetup_body }
+      specify 'the page displays information about the event' do
+        visit '/'
+        expect(page).to have_link(event_name, event_url)
+        expect(page).to have_text(group)
+        expect(page).to have_text('10/21/17 01:00 PM')
+        expect(page).to have_text('10/21/17 06:00 PM')
+      end
+    end
 
-    specify 'the page displays information about the event' do
-      visit '/'
-      expect(page).to have_link(event_name, event_url)
-      expect(page).to have_text(group)
-      expect(page).to have_text('10/21/17 01:00 PM')
-      expect(page).to have_text('10/21/17 06:00 PM')
+    context 'when there is a start time but no duration' do
+      let(:body) { meetup_body }
+      let(:duration) { nil }
+
+      specify 'the page displays information about the event' do
+        visit '/'
+        expect(page).to have_link(event_name, event_url)
+        expect(page).to have_text(group)
+        expect(page).to have_text('10/21/17 01:00 PM')
+        expect(page).not_to have_text('10/21/17 06:00 PM')
+      end
+    end
+
+    context 'when there is neither a start time nor a duration' do
+      let(:body) { meetup_body }
+      let(:start_time) { nil }
+      let(:duration) { nil }
+
+      specify 'the page displays information about the event' do
+        visit '/'
+        expect(page).to have_link(event_name, event_url)
+        expect(page).to have_text(group)
+        expect(page).not_to have_text('10/21/17 01:00 PM')
+        expect(page).not_to have_text('10/21/17 06:00 PM')
+      end
     end
   end
 
   context 'when there are no nearby events' do
-
     let(:body) { { 'results': [] } }
 
     specify "the page displays 'No nearby events found :('"do
