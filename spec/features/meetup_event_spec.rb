@@ -1,24 +1,17 @@
 require 'rails_helper'
+require 'support/meetup_request'
 
 RSpec.feature 'Display meetup event', type: :feature do
-  let(:body) { {'results': []}.to_json }
-  let(:status) { 200 }
+  include_context 'meetup_response'
 
   before do
-    stub_request(:get, %r{api.meetup.com/2/open_events}).with(headers: {'Accept'=>'*/*', 'Accept-Charset'=>'UTF-8', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>'Ruby'}).to_return(status: status, body: body , headers: {})
+    stub_request(:get, %r{api.meetup.com/2/open_events}).with(headers: {'Accept'=>'*/*', 'Accept-Charset'=>'UTF-8', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>'Ruby'}).to_return(status: status, body: body.to_json , headers: {})
   end
 
   context 'when there is more than one nearby event' do
+    let(:body) { meetup_body_multiple_results }
 
-    let(:body) { {'results': [{name: event_name, event_url: event_url, group: {name: event_group}}, {name: event2_name, event_url: event2_url, group: {name: event2_group}}]}.to_json }
-    let(:event_name) { 'Fun-sounding Thing' }
-    let(:event_url) { 'http://meetup/funthing' }
-    let(:event_group) { 'group a' }
-    let(:event2_name) { 'something else' }
-    let(:event2_url) { 'http://meetup/otherthing' }
-    let(:event2_group) { 'group b' }
-
-    specify do
+    specify "clicking 'Anything Else?' gets a random event" do
       visit '/'
       expect(find('#event-link').text).to be_in([event_name, event2_name])
       expect(find('#event-link')[:href]).to be_in([event_url, event2_url])
@@ -29,25 +22,52 @@ RSpec.feature 'Display meetup event', type: :feature do
   end
 
   context 'when there is at least one nearby event' do
+    context 'when there is a start time and duration' do
+      let(:body) { meetup_body }
 
-    let(:body) { {'results': [{name: event_name, event_url: event_url, group: {name: group_name}}]}.to_json }
-    let(:event_name) { 'Fun-sounding Thing' }
-    let(:event_url) { 'http://meetup/funthing' }
-    let(:group_name) { 'People hanging out' }
+      specify 'the page displays information about the event' do
+        visit '/'
+        expect(page).to have_link(event_name, event_url)
+        expect(page).to have_text(group)
+        expect(page).to have_text('10/21/17 01:00 PM')
+        expect(page).to have_text('10/21/17 06:00 PM')
+      end
+    end
 
-    specify do
-      visit '/'
-      expect(page).to have_link(event_name, event_url)
-      expect(page).to have_text(group_name)
+    context 'when there is a start time but no duration' do
+      let(:body) { meetup_body }
+      let(:duration) { nil }
+
+      specify 'the page displays information about the event' do
+        visit '/'
+        expect(page).to have_link(event_name, event_url)
+        expect(page).to have_text(group)
+        expect(page).to have_text('10/21/17 01:00 PM')
+        expect(page).not_to have_text('10/21/17 06:00 PM')
+      end
+    end
+
+    context 'when there is neither a start time nor a duration' do
+      let(:body) { meetup_body }
+      let(:start_time) { nil }
+      let(:duration) { nil }
+
+      specify 'the page displays information about the event' do
+        visit '/'
+        expect(page).to have_link(event_name, event_url)
+        expect(page).to have_text(group)
+        expect(page).not_to have_text('10/21/17 01:00 PM')
+        expect(page).not_to have_text('10/21/17 06:00 PM')
+      end
     end
   end
 
-  context 'when there are not nearby events' do
+  context 'when there are no nearby events' do
+    let(:body) { { 'results': [] } }
 
-    specify do
+    specify "the page displays 'No nearby events found :('"do
       visit '/'
       expect(page).to have_text('No nearby events found :(')
     end
   end
-
 end

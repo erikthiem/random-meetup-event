@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  root 'events#random'
+  root 'events#show'
 
-  get 'events/random'
+  get 'events/show'
 end
