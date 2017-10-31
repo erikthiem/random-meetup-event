@@ -1,5 +1,5 @@
 require 'rails_helper'
-require 'support/meetup_request'
+require 'support/meetup_response'
 
 RSpec.describe EventsController, type: :controller do
   include_context 'meetup_response'
