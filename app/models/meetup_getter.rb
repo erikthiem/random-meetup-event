@@ -1,6 +1,6 @@
 class MeetupGetter
   def self.event
-    nearby_events.sample
+    nearby_events.try :sample
   end
 
   private

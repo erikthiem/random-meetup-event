@@ -21,7 +21,7 @@ RSpec.describe MeetupGetter, type: :model do
 
     context 'when there is one nearby event' do
   
-      let(:body) { meetup_body }
+      let(:body) { meetup_body_single_result }
 
       it 'returns the nearby event' do
         expect(described_class.event['event_url']).to eq event_url
@@ -30,7 +30,7 @@ RSpec.describe MeetupGetter, type: :model do
 
     context 'when there are no nearby events' do
 
-      let(:body) { { 'results': [] } }
+      let(:body) { meetup_body_no_results }
 
       it 'returns nil' do
         expect(described_class.event).to be_nil
