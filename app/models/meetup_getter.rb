@@ -1,6 +1,6 @@
 class MeetupGetter
   def self.event
-    nearby_events.sample
+    nearby_events.try :sample
   end
 
   private
@@ -15,6 +15,11 @@ class MeetupGetter
       page: '50'
     }
     meetup_api = MeetupApi.new
-    meetup_api.open_events(params)['results']
+    begin
+      response = meetup_api.open_events(params)
+      events = response['results']
+    rescue SocketError
+      'Meetup API Error'
+    end
   end
 end

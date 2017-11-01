@@ -1,4 +1,18 @@
 shared_context 'meetup_response' do
+  let(:meetup_body_single_result) do
+    {'results': [
+      {
+        name: event_name,
+        event_url: event_url,
+        time: start_time,
+        duration: duration,
+        group: {
+          name: group
+        }
+      }
+    ]}
+  end
+
   let(:meetup_body_multiple_results) do
     {'results': [
       {
@@ -22,18 +36,8 @@ shared_context 'meetup_response' do
     ]}
   end
 
-  let(:meetup_body) do
-    {'results': [
-      {
-        name: event_name,
-        event_url: event_url,
-        time: start_time,
-        duration: duration,
-        group: {
-          name: group
-        }
-      }
-    ]}
+  let(:meetup_body_no_results) do
+    {'results': nil }
   end
 
   let(:status) { 200 }

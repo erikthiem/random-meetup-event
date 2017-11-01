@@ -22,8 +22,9 @@ RSpec.feature 'Display meetup event', type: :feature do
   end
 
   context 'when there is at least one nearby event' do
+    let(:body) { meetup_body_single_result }
+
     context 'when there is a start time and duration' do
-      let(:body) { meetup_body }
 
       specify 'the page displays information about the event' do
         visit '/'
@@ -35,7 +36,6 @@ RSpec.feature 'Display meetup event', type: :feature do
     end
 
     context 'when there is a start time but no duration' do
-      let(:body) { meetup_body }
       let(:duration) { nil }
 
       specify 'the page displays information about the event' do
@@ -48,7 +48,6 @@ RSpec.feature 'Display meetup event', type: :feature do
     end
 
     context 'when there is neither a start time nor a duration' do
-      let(:body) { meetup_body }
       let(:start_time) { nil }
       let(:duration) { nil }
 
@@ -63,7 +62,7 @@ RSpec.feature 'Display meetup event', type: :feature do
   end
 
   context 'when there are no nearby events' do
-    let(:body) { { 'results': [] } }
+    let(:body) { meetup_body_no_results }
 
     specify "the page displays 'No nearby events found :('"do
       visit '/'
